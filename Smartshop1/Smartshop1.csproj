@@ -1,0 +1,177 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="obj\Debug\net10.0\.NETCoreApp,Version=v10.0.AssemblyAttributes.cs" />
+    <Compile Include="obj\Debug\net10.0\Smartshop1.AssemblyInfo.cs" />
+    <Compile Include="obj\Debug\net10.0\Smartshop1.GlobalUsings.g.cs" />
+    <Compile Include="obj\Debug\net10.0\Smartshop1.MvcApplicationPartsAssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="bin\Debug\net10.0\appsettings.Development.json" />
+    <Content Include="bin\Debug\net10.0\appsettings.json" />
+    <Content Include="bin\Debug\net10.0\Smartshop1.deps.json" />
+    <Content Include="bin\Debug\net10.0\Smartshop1.runtimeconfig.json" />
+    <Content Include="bin\Debug\net10.0\Smartshop1.staticwebassets.endpoints.json" />
+    <Content Include="obj\Debug\net10.0\rjsmcshtml.dswa.cache.json" />
+    <Content Include="obj\Debug\net10.0\rjsmrazor.dswa.cache.json" />
+    <Content Include="obj\Debug\net10.0\rpswa.dswa.cache.json" />
+    <Content Include="obj\Debug\net10.0\Smartshop1.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\net10.0\staticwebassets.build.endpoints.json" />
+    <Content Include="obj\Debug\net10.0\staticwebassets.build.json" />
+    <Content Include="obj\Debug\net10.0\staticwebassets.removed.txt" />
+    <Content Include="obj\project.assets.json" />
+    <Content Include="obj\Smartshop1.csproj.nuget.dgspec.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bin\Debug\net10.0\BouncyCastle.Cryptography.dll" />
+    <None Include="bin\Debug\net10.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <None Include="bin\Debug\net10.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <None Include="bin\Debug\net10.0\cs\Microsoft.CodeAnalysis.resources.dll" />
+    <None Include="bin\Debug\net10.0\cs\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll" />
+    <None Include="bin\Debug\net10.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <None Include="bin\Debug\net10.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <None Include="bin\Debug\net10.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <None Include="bin\Debug\net10.0\de\Microsoft.CodeAnalysis.resources.dll" />
+    <None Include="bin\Debug\net10.0\de\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll" />
+    <None Include="bin\Debug\net10.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <None Include="bin\Debug\net10.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <None Include="bin\Debug\net10.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <None Include="bin\Debug\net10.0\es\Microsoft.CodeAnalysis.resources.dll" />
+    <None Include="bin\Debug\net10.0\es\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll" />
+    <None Include="bin\Debug\net10.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <None Include="bin\Debug\net10.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <None Include="bin\Debug\net10.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <None Include="bin\Debug\net10.0\fr\Microsoft.CodeAnalysis.resources.dll" />
+    <None Include="bin\Debug\net10.0\fr\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll" />
+    <None Include="bin\Debug\net10.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <None Include="bin\Debug\net10.0\Google.Protobuf.dll" />
+    <None Include="bin\Debug\net10.0\Humanizer.dll" />
+    <None Include="bin\Debug\net10.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <None Include="bin\Debug\net10.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <None Include="bin\Debug\net10.0\it\Microsoft.CodeAnalysis.resources.dll" />
+    <None Include="bin\Debug\net10.0\it\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll" />
+    <None Include="bin\Debug\net10.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <None Include="bin\Debug\net10.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <None Include="bin\Debug\net10.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <None Include="bin\Debug\net10.0\ja\Microsoft.CodeAnalysis.resources.dll" />
+    <None Include="bin\Debug\net10.0\ja\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll" />
+    <None Include="bin\Debug\net10.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <None Include="bin\Debug\net10.0\K4os.Compression.LZ4.dll" />
+    <None Include="bin\Debug\net10.0\K4os.Compression.LZ4.Streams.dll" />
+    <None Include="bin\Debug\net10.0\K4os.Hash.xxHash.dll" />
+    <None Include="bin\Debug\net10.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <None Include="bin\Debug\net10.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <None Include="bin\Debug\net10.0\ko\Microsoft.CodeAnalysis.resources.dll" />
+    <None Include="bin\Debug\net10.0\ko\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll" />
+    <None Include="bin\Debug\net10.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <None Include="bin\Debug\net10.0\Microsoft.AspNetCore.OpenApi.dll" />
+    <None Include="bin\Debug\net10.0\Microsoft.Build.Framework.dll" />
+    <None Include="bin\Debug\net10.0\Microsoft.CodeAnalysis.CSharp.dll" />
+    <None Include="bin\Debug\net10.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll" />
+    <None Include="bin\Debug\net10.0\Microsoft.CodeAnalysis.dll" />
+    <None Include="bin\Debug\net10.0\Microsoft.CodeAnalysis.ExternalAccess.RazorCompiler.dll" />
+    <None Include="bin\Debug\net10.0\Microsoft.CodeAnalysis.Workspaces.dll" />
+    <None Include="bin\Debug\net10.0\Microsoft.CodeAnalysis.Workspaces.MSBuild.dll" />
+    <None Include="bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Abstractions.dll" />
+    <None Include="bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Design.dll" />
+    <None Include="bin\Debug\net10.0\Microsoft.EntityFrameworkCore.dll" />
+    <None Include="bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Relational.dll" />
+    <None Include="bin\Debug\net10.0\Microsoft.Extensions.DependencyModel.dll" />
+    <None Include="bin\Debug\net10.0\Microsoft.OpenApi.dll" />
+    <None Include="bin\Debug\net10.0\Microsoft.VisualStudio.SolutionPersistence.dll" />
+    <None Include="bin\Debug\net10.0\Mono.TextTemplating.dll" />
+    <None Include="bin\Debug\net10.0\MySql.Data.dll" />
+    <None Include="bin\Debug\net10.0\MySql.EntityFrameworkCore.dll" />
+    <None Include="bin\Debug\net10.0\Newtonsoft.Json.dll" />
+    <None Include="bin\Debug\net10.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <None Include="bin\Debug\net10.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <None Include="bin\Debug\net10.0\pl\Microsoft.CodeAnalysis.resources.dll" />
+    <None Include="bin\Debug\net10.0\pl\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll" />
+    <None Include="bin\Debug\net10.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <None Include="bin\Debug\net10.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <None Include="bin\Debug\net10.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <None Include="bin\Debug\net10.0\pt-BR\Microsoft.CodeAnalysis.resources.dll" />
+    <None Include="bin\Debug\net10.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll" />
+    <None Include="bin\Debug\net10.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <None Include="bin\Debug\net10.0\runtimes\win-x64\native\comerr64.dll" />
+    <None Include="bin\Debug\net10.0\runtimes\win-x64\native\gssapi64.dll" />
+    <None Include="bin\Debug\net10.0\runtimes\win-x64\native\k5sprt64.dll" />
+    <None Include="bin\Debug\net10.0\runtimes\win-x64\native\krb5_64.dll" />
+    <None Include="bin\Debug\net10.0\runtimes\win-x64\native\krbcc64.dll" />
+    <None Include="bin\Debug\net10.0\runtimes\win\lib\net10.0\System.Windows.Extensions.dll" />
+    <None Include="bin\Debug\net10.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <None Include="bin\Debug\net10.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <None Include="bin\Debug\net10.0\ru\Microsoft.CodeAnalysis.resources.dll" />
+    <None Include="bin\Debug\net10.0\ru\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll" />
+    <None Include="bin\Debug\net10.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <None Include="bin\Debug\net10.0\Smartshop1.dll" />
+    <None Include="bin\Debug\net10.0\Smartshop1.exe" />
+    <None Include="bin\Debug\net10.0\Smartshop1.pdb" />
+    <None Include="bin\Debug\net10.0\System.CodeDom.dll" />
+    <None Include="bin\Debug\net10.0\System.Composition.AttributedModel.dll" />
+    <None Include="bin\Debug\net10.0\System.Composition.Convention.dll" />
+    <None Include="bin\Debug\net10.0\System.Composition.Hosting.dll" />
+    <None Include="bin\Debug\net10.0\System.Composition.Runtime.dll" />
+    <None Include="bin\Debug\net10.0\System.Composition.TypedParts.dll" />
+    <None Include="bin\Debug\net10.0\System.Configuration.ConfigurationManager.dll" />
+    <None Include="bin\Debug\net10.0\System.Security.Cryptography.ProtectedData.dll" />
+    <None Include="bin\Debug\net10.0\System.Security.Permissions.dll" />
+    <None Include="bin\Debug\net10.0\System.Windows.Extensions.dll" />
+    <None Include="bin\Debug\net10.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <None Include="bin\Debug\net10.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <None Include="bin\Debug\net10.0\tr\Microsoft.CodeAnalysis.resources.dll" />
+    <None Include="bin\Debug\net10.0\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll" />
+    <None Include="bin\Debug\net10.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <None Include="bin\Debug\net10.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <None Include="bin\Debug\net10.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <None Include="bin\Debug\net10.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll" />
+    <None Include="bin\Debug\net10.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll" />
+    <None Include="bin\Debug\net10.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <None Include="bin\Debug\net10.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll" />
+    <None Include="bin\Debug\net10.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll" />
+    <None Include="bin\Debug\net10.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll" />
+    <None Include="bin\Debug\net10.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll" />
+    <None Include="bin\Debug\net10.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll" />
+    <None Include="bin\Debug\net10.0\ZstdSharp.dll" />
+    <None Include="obj\Debug\net10.0\apphost.exe" />
+    <None Include="obj\Debug\net10.0\refint\Smartshop1.dll" />
+    <None Include="obj\Debug\net10.0\ref\Smartshop1.dll" />
+    <None Include="obj\Debug\net10.0\Smartshop1.AssemblyInfoInputs.cache" />
+    <None Include="obj\Debug\net10.0\Smartshop1.assets.cache" />
+    <None Include="obj\Debug\net10.0\Smartshop1.csproj.AssemblyReference.cache" />
+    <None Include="obj\Debug\net10.0\Smartshop1.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Debug\net10.0\Smartshop1.csproj.Up2Date" />
+    <None Include="obj\Debug\net10.0\Smartshop1.dll" />
+    <None Include="obj\Debug\net10.0\Smartshop1.GeneratedMSBuildEditorConfig.editorconfig" />
+    <None Include="obj\Debug\net10.0\Smartshop1.genruntimeconfig.cache" />
+    <None Include="obj\Debug\net10.0\Smartshop1.MvcApplicationPartsAssemblyInfo.cache" />
+    <None Include="obj\Debug\net10.0\Smartshop1.pdb" />
+    <None Include="obj\Debug\net10.0\staticwebassets.build.json.cache" />
+    <None Include="obj\Debug\net10.0\swae.build.ex.cache" />
+    <None Include="obj\project.nuget.cache" />
+    <None Include="obj\Smartshop1.csproj.nuget.g.props" />
+    <None Include="obj\Smartshop1.csproj.nuget.g.targets" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.13">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="MySql.EntityFrameworkCore" Version="10.0.12" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="obj\Debug\net10.0\staticwebassets\" />
+  </ItemGroup>
+
+</Project>
