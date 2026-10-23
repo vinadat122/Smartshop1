@@ -6,20 +6,20 @@ namespace Smartshop1.Data;
 
 public class SmartShopContext : DbContext
 {
-    public SmartShopContext(
-        DbContextOptions<SmartShopContext> options)
+    public SmartShopContext(DbContextOptions<SmartShopContext> options)
         : base(options)
     {
     }
 
     public DbSet<Product> Products => Set<Product>();
-
     public DbSet<Review> Reviews => Set<Review>();
+    public DbSet<ChatMessage> ChatMessages => Set<ChatMessage>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
+        // Product table
         modelBuilder.Entity<Product>(entity =>
         {
             entity.ToTable("Product");
@@ -46,6 +46,7 @@ public class SmartShopContext : DbContext
                 .IsRequired(false);
         });
 
+        // Review table
         modelBuilder.Entity<Review>(entity =>
         {
             entity.ToTable("Review");
@@ -86,6 +87,36 @@ public class SmartShopContext : DbContext
                 .WithMany(p => p.Reviews)
                 .HasForeignKey(r => r.ProductId)
                 .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // ChatMessage table
+        modelBuilder.Entity<ChatMessage>(entity =>
+        {
+            entity.ToTable("ChatMessage");
+
+            entity.HasKey(c => c.Id);
+
+            entity.Property(c => c.SessionId)
+                .HasMaxLength(100)
+                .IsRequired();
+
+            entity.Property(c => c.Role)
+                .HasMaxLength(20)
+                .IsRequired();
+
+            entity.Property(c => c.Content)
+                .HasColumnType("longtext")
+                .IsRequired();
+
+            entity.Property(c => c.CreatedAt)
+                .HasColumnType("datetime")
+                .IsRequired();
+
+            entity.HasIndex(c => new
+            {
+                c.SessionId,
+                c.CreatedAt
+            });
         });
     }
 }
