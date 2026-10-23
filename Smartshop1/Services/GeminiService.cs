@@ -1,6 +1,7 @@
 ﻿
 using System.Net.Http.Json;
 using System.Text.Json;
+using Smartshop1.Models;
 
 namespace Smartshop1.Services;
 
@@ -15,35 +16,114 @@ public class GeminiService
     {
         _httpClient = httpClient;
         _configuration = configuration;
+        _httpClient.Timeout = TimeSpan.FromSeconds(30);
     }
 
+    // Lấy API key và model từ appsettings.json
+    private string GetApiUrl()
+    {
+        var apiKey = _configuration["Gemini:ApiKey"];
+        var model = _configuration["Gemini:Model"];
+
+        if (string.IsNullOrWhiteSpace(apiKey) ||
+            apiKey == "YOUR_GEMINI_API_KEY")
+        {
+            throw new InvalidOperationException(
+                "Gemini API key chưa được cấu hình.");
+        }
+
+        if (string.IsNullOrWhiteSpace(model))
+        {
+            throw new InvalidOperationException(
+                "Gemini:Model chưa được cấu hình trong appsettings.json.");
+        }
+
+        Console.WriteLine($"Gemini model đang dùng: {model}");
+
+        return $"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={apiKey}";
+    }
+
+    // Gửi yêu cầu đến Gemini và xử lý phản hồi chung
+    private async Task<string> SendToGeminiAsync(object requestBody)
+    {
+        var url = GetApiUrl();
+
+        try
+        {
+            using var response = await _httpClient.PostAsJsonAsync(
+                url, requestBody);
+
+            var responseText =
+                await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new InvalidOperationException(
+                    $"Gemini API lỗi {(int)response.StatusCode}: {responseText}");
+            }
+
+            using var document = JsonDocument.Parse(responseText);
+            var root = document.RootElement;
+
+            if (root.TryGetProperty("candidates", out var candidates) &&
+                candidates.GetArrayLength() > 0)
+            {
+                var candidate = candidates[0];
+
+                if (candidate.TryGetProperty("content", out var content) &&
+                    content.TryGetProperty("parts", out var parts))
+                {
+                    var texts = parts.EnumerateArray()
+                        .Where(p => p.TryGetProperty("text", out _))
+                        .Select(p => p.GetProperty("text").GetString())
+                        .Where(t => !string.IsNullOrWhiteSpace(t));
+
+                    var result = string.Join("\n", texts);
+
+                    if (!string.IsNullOrWhiteSpace(result))
+                        return result.Trim();
+                }
+            }
+
+            throw new InvalidOperationException(
+                "Gemini không trả về nội dung hợp lệ.");
+        }
+        catch (TaskCanceledException ex)
+        {
+            throw new InvalidOperationException(
+                "Gemini không phản hồi trong 30 giây. " +
+                "Hãy kiểm tra kết nối Internet và model Gemini.", ex);
+        }
+        catch (HttpRequestException ex)
+        {
+            throw new InvalidOperationException(
+                "Không kết nối được tới Gemini API. Hãy kiểm tra Internet.", ex);
+        }
+    }
+
+    // API 1: Tạo mô tả sản phẩm
     public async Task<string> GenerateDescriptionAsync(
         string productName,
         string category,
         string features)
     {
-        var apiKey = _configuration["Gemini:ApiKey"];
-        var model = _configuration["Gemini:Model"] ?? "gemini-2.5-flash";
-
-        if (string.IsNullOrWhiteSpace(apiKey))
-            throw new InvalidOperationException("Gemini API key chưa được cấu hình.");
-
-        var url =
-            $"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={apiKey}";
-
         var prompt = $"""
-            Bạn là chuyên gia viết nội dung thương mại điện tử.
-            Hãy viết mô tả sản phẩm chuyên nghiệp bằng tiếng Anh, tối thiểu 80 từ.
-            Chỉ sử dụng thông tin được cung cấp, không bịa thông số.
+            You are a professional e-commerce copywriter.
+
+            Write a professional product description in English
+            with at least 80 words.
+
+            Only use the product information provided.
+            Do not invent specifications or features.
 
             Product name: {productName}
             Category: {category}
             Features: {features}
 
-            Chỉ trả về nội dung mô tả, không thêm tiêu đề hay lời dẫn.
+            Return only the description, without a title.
             """;
 
-        var requestBody = new
+        var body = new
         {
             contents = new[]
             {
@@ -57,77 +137,50 @@ public class GeminiService
             }
         };
 
-        using var response = await _httpClient.PostAsJsonAsync(url, requestBody);
-        var responseText = await response.Content.ReadAsStringAsync();
-
-        if (!response.IsSuccessStatusCode)
-            throw new InvalidOperationException(
-                $"Gemini API lỗi {(int)response.StatusCode}: {responseText}");
-
-        using var document = JsonDocument.Parse(responseText);
-
-        var description = document.RootElement
-            .GetProperty("candidates")[0]
-            .GetProperty("content")
-            .GetProperty("parts")[0]
-            .GetProperty("text")
-            .GetString();
-
-        if (string.IsNullOrWhiteSpace(description))
-            throw new InvalidOperationException("Gemini không trả về mô tả.");
-
-        return description.Trim();
+        return await SendToGeminiAsync(body);
     }
+
+    // API 2: Phân tích đánh giá
     public async Task<string> AnalyzeReviewAsync(string content)
     {
-        var apiKey = _configuration["Gemini:ApiKey"];
-        var model = _configuration["Gemini:Model"] ?? "gemini-2.5-flash";
-
-        var url = $"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={apiKey}";
-
         var prompt = $"""
-        Analyze this customer review.
-        Return JSON only, with these fields:
-        sentiment: Positive, Negative, or Neutral
-        score: number from 0 to 1
-        summary: short summary, maximum 256 characters
-        Review: {content}
-        """;
+            Analyze this customer review.
+
+            Return a valid JSON object only, without Markdown:
+            - sentiment: Positive, Negative, or Neutral
+            - score: number from 0 to 1
+            - summary: short summary, maximum 256 characters
+
+            Review: {content}
+            """;
 
         var body = new
         {
             contents = new[]
             {
-            new { parts = new[] { new { text = prompt } } }
-        },
-            generationConfig = new { responseMimeType = "application/json" }
+                new
+                {
+                    parts = new[]
+                    {
+                        new { text = prompt }
+                    }
+                }
+            },
+            generationConfig = new
+            {
+                responseMimeType = "application/json"
+            }
         };
 
-        using var response = await _httpClient.PostAsJsonAsync(url, body);
-        var responseText = await response.Content.ReadAsStringAsync();
-
-        if (!response.IsSuccessStatusCode)
-            throw new InvalidOperationException(responseText);
-
-        using var doc = JsonDocument.Parse(responseText);
-        return doc.RootElement.GetProperty("candidates")[0]
-            .GetProperty("content").GetProperty("parts")[0]
-            .GetProperty("text").GetString()!;
+        return await SendToGeminiAsync(body);
     }
+
+    // API 3: Chatbot tư vấn sản phẩm
     public async Task<string> ChatAsync(
-    string message,
-    string productContext,
-    List<Smartshop1.Models.ChatMessage> history)
+        string message,
+        string productContext,
+        List<ChatMessage> history)
     {
-        var apiKey = _configuration["Gemini:ApiKey"];
-        var model = _configuration["Gemini:Model"] ?? "gemini-2.5-flash";
-
-        if (string.IsNullOrWhiteSpace(apiKey))
-            throw new InvalidOperationException("Gemini API key chưa được cấu hình.");
-
-        var url =
-            $"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={apiKey}";
-
         var contents = new List<object>();
 
         foreach (var item in history)
@@ -138,14 +191,20 @@ public class GeminiService
             contents.Add(new
             {
                 role = item.Role,
-                parts = new[] { new { text = item.Content } }
+                parts = new[]
+                {
+                    new { text = item.Content }
+                }
             });
         }
 
         contents.Add(new
         {
             role = "user",
-            parts = new[] { new { text = message } }
+            parts = new[]
+            {
+                new { text = message }
+            }
         });
 
         var body = new
@@ -154,49 +213,29 @@ public class GeminiService
             {
                 parts = new[]
                 {
-                new
-                {
-                    text = $"""
-                    Bạn là trợ lý tư vấn sản phẩm của SmartShop.
+                    new
+                    {
+                        text = $"""
+                            Bạn là trợ lý tư vấn sản phẩm SmartShop.
 
-                    CHỈ trả lời câu hỏi liên quan đến các sản phẩm có trong dữ liệu
-                    được cung cấp, ví dụ: tên, giá, danh mục, tính năng và mô tả.
+                            Chỉ trả lời câu hỏi liên quan đến sản phẩm
+                            trong dữ liệu được cung cấp.
 
-                    Nếu câu hỏi không liên quan đến sản phẩm SmartShop,
-                    hãy từ chối lịch sự và hướng người dùng quay lại chủ đề sản phẩm.
+                            Nếu câu hỏi không liên quan đến sản phẩm,
+                            hãy từ chối lịch sự.
 
-                    Chỉ sử dụng dữ liệu sản phẩm được cung cấp.
-                    Không tự bịa giá, tính năng hoặc thông số.
-                    Trả lời bằng tiếng Việt, rõ ràng và thân thiện.
+                            Không tự bịa giá, tính năng hoặc thông số.
+                            Trả lời bằng tiếng Việt, rõ ràng và thân thiện.
 
-                    DỮ LIỆU SẢN PHẨM:
-                    {productContext}
-                    """
+                            DỮ LIỆU SẢN PHẨM:
+                            {productContext}
+                            """
+                    }
                 }
-            }
             },
             contents = contents
         };
 
-        using var response = await _httpClient.PostAsJsonAsync(url, body);
-        var responseText = await response.Content.ReadAsStringAsync();
-
-        if (!response.IsSuccessStatusCode)
-            throw new InvalidOperationException(
-                $"Gemini API lỗi {(int)response.StatusCode}: {responseText}");
-
-        using var document = JsonDocument.Parse(responseText);
-
-        var reply = document.RootElement
-            .GetProperty("candidates")[0]
-            .GetProperty("content")
-            .GetProperty("parts")[0]
-            .GetProperty("text")
-            .GetString();
-
-        if (string.IsNullOrWhiteSpace(reply))
-            throw new InvalidOperationException("Gemini không trả về câu trả lời.");
-
-        return reply.Trim();
+        return await SendToGeminiAsync(body);
     }
 }
